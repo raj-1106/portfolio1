@@ -1,6 +1,6 @@
 # Raj Lathigra — Portfolio
 
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Framer Motion](https://img.shields.io/badge/animation-Framer%20Motion-black)](https://www.framer.com/motion/)
 [![Deployed on Vercel](https://img.shields.io/badge/deployed-Vercel-black?logo=vercel)](https://vercel.com/)
@@ -42,7 +42,7 @@ now serving a life sentence in git history instead of production.
 
 | Layer | Choice | Reasoning, briefly |
 |---|---|---|
-| Framework | Next.js 14, App Router | Static generation, so a link pasted into Slack shows actual content, not four seconds of loading spinner and a recruiter who's already moved on |
+| Framework | Next.js 16, App Router | Static generation, so a link pasted into Slack shows actual content, not four seconds of loading spinner and a recruiter who's already moved on |
 | Animation | Framer Motion (+ GSAP, conditionally) | `whileInView` / `whileHover` cover almost everything; GSAP only gets invited if the diagrams' SVG paths need choreography Framer can't do alone |
 | Components | Radix UI primitives, fully custom styling | Accessibility scaffolding without the visual DNA of every other site that installed the same component library and called it a day |
 | Content | MDX per project, plain JSON for Experience | Projects need room to breathe; Experience is four fixed entries that don't need a content-management system to say "worked here, did this" |
