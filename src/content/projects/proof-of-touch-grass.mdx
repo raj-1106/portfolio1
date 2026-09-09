@@ -1,0 +1,87 @@
+---
+title: 'Proof of Touch Grass'
+slug: 'proof-of-touch-grass'
+description: 'EVM-based attestation contract for real-world activity verification.'
+tags: ['Social', 'Attestation', 'EVM']
+chain: 'evm'
+evmChain: 'sepolia'
+techStack: ['Solidity', 'Hardhat', 'Ethers.js', 'React']
+status: 'live'
+depth: 'full'
+repoUrl: 'https://github.com/raj-1106/proof-of-touch-grass'
+liveUrl: 'https://proof-of-touchgrass.netlify.app'
+---
+
+## What is this?
+
+Your therapist said go outside.
+Your friends said touch grass.
+You said "ok but what if I staked USDC on it."
+
+This is that.
+
+**Proof of Touch Grass** is a fully on-chain accountability protocol where you stake real money to prove you went outside — and strangers on Ethereum decide if you actually did.
+
+No pressure. Just your USDC on the line.
+
+## How it works
+
+- Stake 1 USDC → create a challenge
+- Actually go outside → upload photo proof to IPFS
+- Strangers vote on your proof → they stake 0.10 USDC to do so
+- Honest voters win money → dishonest voters lose money
+- Touch grass → get paid → repeat
+
+It's a gym buddy. But the gym buddy is Ethereum.
+And if they lie, they lose money.
+And so do you.
+
+## The Incentive Model (aka why nobody cheats)
+
+### ✅ If your proof gets APPROVED
+
+- **You (creator)**: Get 1 USDC back + bonus from reject voters
+- **Approve voters**: Get their 0.10 USDC stake back
+- **Reject voters**: Lose their 0.10 USDC. Should have believed you.
+
+### ❌ If your proof gets REJECTED
+
+- **You (creator)**: Lose 1 USDC. Should have touched grass.
+- **Reject voters**: Get their stake back + share your 1 USDC
+- **Approve voters**: Lose their 0.10 USDC. Should have looked harder.
+
+### The math
+You submitted fake grass (a houseplant).
+5 people approved. 3 people rejected.
+reject pool  = 3 × 0.10 = 0.30 USDC
+fee (5%)     = 0.015 USDC → protocol treasury
+your bonus   = 1.00 + 0.30 - 0.015 = 1.285 USDC
+You profited 0.285 USDC and fooled nobody.
+The houseplant is proud of you.
+
+Nobody can lie without losing money.
+Nobody can vote lazily without skin in the game.
+This is just capitalism but for going outside.
+
+## Gas Optimizations
+
+Because every wei saved is a wei earned:
+
+- 🗜️ **Tight struct packing** — 3 storage slots instead of 12
+- ⚡ **uint256 reentrancy guard** — cheaper than `bool` by ~18,000 gas
+- 🗳️ **Single mapping encodes vote + choice** — saves one cold SSTORE per vote
+- 📢 **Strings emitted as events only** — not stored on-chain
+- ❌ **Custom errors over require strings** — smaller bytecode, cheaper reverts
+- 🔢 **unchecked arithmetic where safe** — because Solidity 0.8 already has your back
+
+## Security
+
+- ✅ Reentrancy protected
+- ✅ Checks-Effects-Interactions pattern
+- ✅ SafeERC20 for all token transfers
+- ✅ Per-challenge prize pools (no cross-challenge fund leakage)
+- ✅ CID validation on all IPFS inputs
+- ✅ Access control on treasury withdrawal
+
+Audited by: me, at 2am, with coffee.
+Use at your own risk. Touch grass at your own discretion.

@@ -1,0 +1,33 @@
+---
+title: 'ERC-4626 Inflation Attack'
+slug: 'erc-4626-inflation-attack'
+description: 'A self-contained Foundry demonstration of the ERC-4626 inflation attack, complete with vulnerable vault, fuzz tests, and two production-grade fixes.'
+tags: ['Security', 'DeFi', 'EVM']
+chain: 'evm'
+techStack: ['Solidity', 'Foundry', 'Fuzzing']
+status: 'archived'
+depth: 'full'
+repoUrl: 'https://github.com/your-username/erc-4626-inflation-attack'
+diagramType: 'inflation-attack-comparison'
+---
+
+## Overview
+
+ERC-4626 vaults price shares against assets using a simple ratio: `totalAssets() / totalSupply()`. That ratio is meaningless the moment a vault is empty, because whoever deposits first gets to set it. This project is a self-contained Foundry demonstration of the resulting "inflation attack," a working exploit against a deliberately naive vault, two production-grade fixes, and a fuzz suite that stress-tests both across a wide input range.
+
+## The attack
+
+An attacker seeds an empty vault with 1 wei, getting 100% of the (tiny) share supply. They then donate a large amount directly via a raw token transfer, not through `deposit()`, which inflates `totalAssets()` without minting new shares. The next real depositor's share calculation rounds down to zero, and the attacker redeems their single share for nearly the entire pool, including the victim's money, for the cost of 1 wei and a transfer.
+
+The attacker's own donation is the thing that dilutes them; they're now competing against their own capital instead of the victim's.
+
+## Two fixes, compared, not just one
+
+- **Virtual offset** (OpenZeppelin's approach): pad the conversion math with notional shares/assets nobody can redeem, so an attacker's real stake is diluted from block one. Costs every depositor a small, permanent rounding tax; costs nothing upfront.
+- **Minimum deposit + dead shares** (the Uniswap V2 pattern): reject any first deposit below a threshold, burn a fixed number of shares to a dead address. No ongoing cost to depositors, but whoever seeds the vault permanently forfeits real value, and the vault can't accept deposits at all until someone clears the threshold.
+
+Both are production patterns; picking one is a product decision, not a security ranking, zero ongoing cost versus zero upfront cost.
+
+## Current state
+
+Fuzz-tested (`forge test --fuzz-runs 10000`) confirming the attacker never profits under either fix, across seed sizes, donation sizes, and victim deposits from 1 wei to 1e30. The vulnerable vault and both fixes are written for clarity, not production hardening; rounding direction, fee-on-transfer tokens, and full interface compliance would need review before real deployment.

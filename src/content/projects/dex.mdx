@@ -1,0 +1,29 @@
+---
+title: 'DEX'
+slug: 'dex'
+description: 'Constant-product automated market maker (x·y=k) supporting arbitrary ERC-20 pairs.'
+tags: ['DeFi', 'DEX', 'AMM', 'EVM']
+chain: 'evm'
+evmChain: 'amoy'
+techStack: ['Solidity', 'Foundry', 'Polygon']
+status: 'in-progress'
+depth: 'full'
+repoUrl: 'https://github.com/your-username/dex'
+diagramType: 'amm-graph'
+---
+
+## Overview
+
+A constant-product AMM (x·y=k) deployed live on Polygon Amoy testnet, with a 0.3% swap fee, supporting liquidity provision, removal, and swaps between arbitrary ERC-20 pairs.
+
+## How it works
+
+First liquidity deposit into a pool mints LP shares via the geometric mean of both token amounts (`sqrt(amount0 * amount1)`); subsequent deposits are ratio-matched against existing reserves. Swaps apply the standard 997/1000 fee split before computing output via the constant-product formula.
+
+## A real design gotcha
+
+Pools are keyed by `(token0, token1)` in the exact order they're passed in. Calling `swap` with the pair reversed doesn't route to the same pool, it addresses a *different*, likely-empty pool entirely. This is the kind of bug that's invisible in a happy-path demo and only shows up when a frontend or a second caller passes arguments in the "wrong" order, worth calling out explicitly rather than letting a visitor discover it themselves.
+
+## Current state
+
+No slippage protection or swap deadlines yet, meaning a transaction sitting in the mempool could execute at a worse price than expected. Uses raw `IERC20` transfers rather than `SafeERC20`, so it doesn't currently guard against non-standard token implementations. `addLiquidity` calls `transferFrom` before updating pool state, worth flagging for anyone reviewing reentrancy exposure, even though the current test scope hasn't covered whether it's exploitable in practice with this contract's function ordering.

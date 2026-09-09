@@ -1,0 +1,72 @@
+---
+title: 'Lending Protocol'
+slug: 'lending-protocol'
+description: 'Collateralized lending with automated liquidation based on real-time oracle price feeds.'
+tags: ['DeFi', 'Lending', 'Liquidation']
+chain: 'svm'
+techStack: ['Rust', 'Anchor', 'Solana', 'Pyth Oracle']
+status: 'in-progress'
+depth: 'full'
+repoUrl: 'https://github.com/raj-1106/lending-protocol'
+diagramType: 'liquidation-flow'
+---
+
+## What it does
+
+- **Deposit SOL as collateral**, tracked per-borrower in an `Obligation` account
+- **Borrow against that collateral**, gated by a loan-to-value (LTV) ratio checked against a price feed
+- **Repay** debt voluntarily
+- **Withdraw collateral**, blocked if it would leave the position below the LTV-safe threshold
+- **Liquidate** an underwater position — permissionless: anyone can call it once a position's debt exceeds the liquidation threshold, and the liquidator is paid a bonus for doing so
+
+## Design choice: ledger-only debt, not a real second-asset loan
+
+This protocol is intentionally single-asset: collateral is SOL, and "borrowing" doesn't pay out a second token. Instead, `borrow` records a synthetic USD-denominated debt figure on the `Obligation`, computed from a price feed.
+
+This was a deliberate simplification, not an oversight. A same-asset lending market (deposit SOL, borrow SOL 1:1) would make the price feed irrelevant — collateral value and debt value would move together, and price changes would never actually trigger a liquidation. The ledger-only design keeps debt fixed in USD terms while collateral value floats with price, so price movement genuinely changes the health factor — which is the entire mechanic this project exists to demonstrate.
+
+Liquidation is what gives the ledger debt real backing: a liquidator pays real SOL into the vault to "repay" the USD-denominated debt, and receives seized SOL collateral plus a bonus in return. This is why liquidation is profitable and voluntary, the same incentive structure real lending protocols rely on to get liquidations to actually happen.
+
+## Two price sources: mock and real Pyth
+
+Price comes from either of two sources, deliberately kept as parallel instruction paths rather than one replacing the other:
+
+- **`MockPriceFeed`** (`borrow`, `liquidate`, `repay`, `withdraw_collateral`) — an admin-settable account, not a live oracle. Chosen so LTV and liquidation logic could be tested deterministically: set a price, confirm the health factor, crash the price, confirm liquidation triggers, without depending on real market conditions.
+- **A real Pyth SOL/USD price feed** (`borrow_pyth`, `liquidate_pyth`) — reads a live `PriceUpdateV2` account via the [Pyth Solana Receiver SDK](https://crates.io/crates/pyth-solana-receiver-sdk), with staleness, feed-ID, and confidence-interval checks before trusting the price (see `sol_price_usd_cents_from_pyth` in `lib.rs`).
+
+Both paths share the same underlying LTV/collateral-value math (`collateral_value`, `usd_cents_to_lamports`), which is source-agnostic — it takes a plain `u64` price regardless of where that price came from.
+
+They're kept separate rather than merged because a live `PriceUpdateV2` account can't be hand-constructed in a localnet test the way `MockPriceFeed` can (`set_price` lets tests hit exact liquidation thresholds deterministically; a real Pyth account needs an actual signed update). Keeping both means the deterministic test suite stays intact while the Pyth path is verified against real market data separately.
+
+## Real Pyth integration — verified on devnet
+
+`borrow_pyth` and `liquidate_pyth` were tested against Pyth's actual SOL/USD feed on devnet, not simulated. One verified run:
+
+- A position holding 1.1 SOL collateral with $224.99 debt (recorded from an earlier real Pyth-priced borrow) was read as underwater by `liquidate_pyth` against the live feed — genuinely underwater, not manufactured with `set_price`.
+- After a $10.00 liquidation: debt dropped to $215.29 (the $9.70 net difference includes $0.30 of real accrued interest in between), and collateral dropped by 0.148648648 SOL.
+- That collateral drop implies a liquidation of $11.00 (the $10.00 repay plus a 10% bonus) at **$74.00/SOL**, independently matching real-market SOL price at the time within cents. Two independent numbers landing on the same price is the actual proof this integration works end to end, not just that the instruction didn't revert.
+
+One real bug was found and fixed during this verification: `liquidate_pyth`'s reserve-wide aggregate counters (`total_borrowed_usd`, `total_collateral`) used `checked_sub` with no guard, and could underflow if the reserve's aggregate had drifted out of sync with what one individual obligation owed (which it had, after enough mixed mock- and Pyth-priced testing on one shared reserve). Fixed by making those two specific subtractions `saturating_sub` instead — they're analytics tallies, not the source of truth for any individual position's solvency (that's `obligation`, which is correctly `checked_sub`-guarded by explicit `require!` checks before either transfer executes).
+
+## What's tested
+
+12 mocha tests against the mock-price path, covering:
+- Reserve, price feed, and obligation setup
+- Borrowing exactly up to the LTV limit, and rejection one cent over
+- Oracle price change genuinely altering borrowing capacity, in both directions
+- Liquidation of an underwater position, verifying the liquidator profits (not just that the transaction succeeds — profitability is what makes permissionless liquidation viable at all)
+- Rejection of liquidating a healthy position
+- Partial and full repayment
+- Collateral withdrawal, including rejection when it would breach the LTV limit given outstanding debt
+
+The Pyth-priced path (`borrow_pyth`, `liquidate_pyth`) has a different verification story:
+- `pyth_price_to_usd_cents`, the pure price-conversion math, has real `#[cfg(test)]` unit tests in `lib.rs` (main case, a non-negative-exponent edge case, and rejection of non-positive prices) — these run under plain `cargo test`, no validator needed.
+- The instructions themselves are verified manually against real devnet data (see above) rather than by an automated mocha test, since exercising a live `PriceUpdateV2` account in a repeatable localnet test would require genesis-cloning Pyth's receiver and price-feed programs and posting a real signed update — meaningfully more setup than the mock path needed, and not yet built.
+
+## Known limitations
+
+- Single asset only (SOL) — no cross-asset borrowing
+- The Pyth-priced path is verified manually against real devnet data, not covered by an automated on-chain test (see above)
+- Interest accrual (simple linear model) is implemented but not yet tested against real elapsed time on the mock path
+- The reserve's admin-config validation test has a known weakness (documented in the test file itself)
+- `liquidate` (the mock-priced liquidation) has the same unguarded reserve-aggregate `checked_sub` pattern that caused a real bug in `liquidate_pyth` (fixed there, not yet audited/fixed here — the 18 existing tests should be checked against this before changing it)
