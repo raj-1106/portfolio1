@@ -63,6 +63,7 @@ export function InflationAttackComparison() {
         {(['vulnerable', 'virtual-offset', 'min-deposit'] as const).map((tab) => (
           <button
             key={tab}
+            suppressHydrationWarning
             onClick={() => setActiveTab(tab)}
             style={{
               flex: 1,

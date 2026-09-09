@@ -74,7 +74,7 @@ export const projects: ProjectMeta[] = [
     status: 'live',
     depth: 'full',
     repoUrl: 'https://github.com/raj-1106/dex',
-    liveUrl: 'https://decentralizedexchange.netlify.app/',
+    liveUrl: 'https://dex-ten-omega.vercel.app/',
     diagramType: 'amm-graph',
   },
   {
@@ -116,10 +116,25 @@ export const rpcAllowlist: Record<string, {
   programId: string;
   rpcEndpoint: string;
 }> = {
-   //Populate with actual program IDs and endpoints when available
+   // Populate with actual program IDs and endpoints when available
    'roomiesplit': {
     chain: 'svm',
-    programId: 'BzEpHaoaEGSQwnFbSv8gVwpxh4tQBn2WS1pDTjUMbc3c',
+    programId: 'BzEpHaoaEGSQwnFbSv8gVwpxh4tQBn2WS1pDTjUMbc3c', // PLACEHOLDER
     rpcEndpoint: 'https://api.devnet.solana.com',
    },
+   'lending-protocol': {
+    chain: 'svm',
+    programId: '4mLbRVccVFXDkcGDBApraUxXVUfJoTUMg4gd4EBjQVuQ', // PLACEHOLDER
+    rpcEndpoint: 'https://api.devnet.solana.com',
+   },
+   'proof-of-touch-grass': {
+    chain: 'evm',
+    programId: '0x431Fb77991919b47D7f54f18d393490707819561', // PLACEHOLDER
+    rpcEndpoint: 'https://rpc.sepolia.org',
+   },
+   'dex': {
+    chain: 'evm',
+    programId: '0x83Bc786acDEDF91cCA6Dd3af7aA6Bd9a36A8CFc8',
+    rpcEndpoint: 'https://eth-sepolia.g.alchemy.com/v2/OOIMS_hWS2oBIZXbMyjTG',
+   }
 };

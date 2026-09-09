@@ -38,7 +38,7 @@ export function LiveStateBadge({ programSlug }: LiveStateBadgeProps) {
         fontFamily: 'var(--font-mono)',
       }}
     >
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="wait">
         {status === 'loading' && (
           <motion.div
             key="loading"

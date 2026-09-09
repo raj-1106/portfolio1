@@ -14,16 +14,16 @@ diagramType: 'amm-graph'
 
 ## Overview
 
-A constant-product AMM (x·y=k) deployed live on Polygon Amoy testnet, with a 0.3% swap fee, supporting liquidity provision, removal, and swaps between arbitrary ERC-20 pairs.
+A constant-product AMM (x·y=k) live on Polygon Amoy testnet, with a 0.3% swap fee, supporting liquidity provision, removal, and swaps between arbitrary ERC-20 pairs.
 
 ## How it works
 
-First liquidity deposit into a pool mints LP shares via the geometric mean of both token amounts (`sqrt(amount0 * amount1)`); subsequent deposits are ratio-matched against existing reserves. Swaps apply the standard 997/1000 fee split before computing output via the constant-product formula.
+Pools are keyed by a canonical, sorted token pair, so addLiquidity(A, B) and a later swap(B, A) always resolve to the same pool, not two disconnected ones. First liquidity deposit locks a fixed MINIMUM_LIQUIDITY to a dead address, standard defense against first-depositor share-inflation attacks. Every swap and deposit requires a minimum-output/minimum-liquidity parameter and a deadline, and reserve accounting is based on measured balance deltas rather than requested amounts, so fee-on-transfer tokens price correctly instead of silently breaking the pool's invariant.
 
-## A real design gotcha
+## What a security pass actually caught
 
-Pools are keyed by `(token0, token1)` in the exact order they're passed in. Calling `swap` with the pair reversed doesn't route to the same pool, it addresses a *different*, likely-empty pool entirely. This is the kind of bug that's invisible in a happy-path demo and only shows up when a frontend or a second caller passes arguments in the "wrong" order, worth calling out explicitly rather than letting a visitor discover it themselves.
+Before this went live, a review of an earlier draft turned up a real reentrancy hole (external token transfer happening before reserve state updated, the standard checks-effects-interactions violation), plus five smaller issues: non-canonical pool identity, no minimum-liquidity lock, no slippage or deadline protection, unchecked ERC20 return values, and no handling for fee-on-transfer tokens. All six were fixed before deployment, the reentrancy fix specifically is regression-tested with a Foundry test that simulates a malicious token reentering swap() mid-transfer and confirms it now reverts.
 
 ## Current state
 
-No slippage protection or swap deadlines yet, meaning a transaction sitting in the mempool could execute at a worse price than expected. Uses raw `IERC20` transfers rather than `SafeERC20`, so it doesn't currently guard against non-standard token implementations. `addLiquidity` calls `transferFrom` before updating pool state, worth flagging for anyone reviewing reentrancy exposure, even though the current test scope hasn't covered whether it's exploitable in practice with this contract's function ordering.
+Seven tests passing, including the reentrancy and pool-identity regression tests. LP positions are tracked internally, not as a transferable ERC20 token, worth knowing if you're comparing this against Uniswap V2's LP-token model. Donated tokens sent directly to the contract (bypassing addLiquidity) are currently unrecoverable, no skim() function yet, low severity, just dead weight, not a fund-safety issue.

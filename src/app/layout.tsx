@@ -32,6 +32,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ConsoleEasterEgg } from '@/components/common/ConsoleEasterEgg';
+
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
@@ -40,6 +42,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     >
       <body suppressHydrationWarning>
         <ReducedMotionProvider>
+          <ConsoleEasterEgg />
           <Navbar />
           <main>{children}</main>
           <Footer />

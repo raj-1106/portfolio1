@@ -151,9 +151,9 @@ export function AMMGraphDiagram() {
 
                 {/* Node box / container */}
                 <rect
-                  x="-60"
+                  x="-75"
                   y="-20"
-                  width="120"
+                  width="150"
                   height="40"
                   rx="20"
                   fill="var(--bg-secondary)"
@@ -164,7 +164,7 @@ export function AMMGraphDiagram() {
 
                 {/* Status dot */}
                 <circle
-                  cx="-45"
+                  cx="-60"
                   cy="0"
                   r="4"
                   fill={isActive ? 'var(--accent)' : statusColor}
@@ -173,7 +173,7 @@ export function AMMGraphDiagram() {
 
                 {/* Label */}
                 <text
-                  x="-30"
+                  x="-45"
                   y="4"
                   textAnchor="start"
                   fill={isActive ? 'var(--text-primary)' : 'var(--text-secondary)'}
@@ -201,7 +201,7 @@ export function AMMGraphDiagram() {
                 position: 'absolute',
                 left: `${(node.cx / 700) * 100}%`,
                 top: `${(node.cy / 320) * 100}%`,
-                width: '120px',
+                width: '150px',
                 height: '40px',
                 transform: 'translate(-50%, -50%)',
                 opacity: 0,
