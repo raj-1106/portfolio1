@@ -26,4 +26,4 @@ export interface LiveState {
 
 export type ChainFilter = 'all' | 'svm' | 'evm';
 
-export type NodeStatus = 'live' | 'in-progress' | 'archived';
+export type NodeStatus = 'live' | 'in-progress' | 'archived' | 'completed';
