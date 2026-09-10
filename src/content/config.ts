@@ -130,7 +130,7 @@ export const rpcAllowlist: Record<string, {
    'proof-of-touch-grass': {
     chain: 'evm',
     programId: '0x431Fb77991919b47D7f54f18d393490707819561',
-    rpcEndpoint: 'https://rpc.sepolia.org',
+    rpcEndpoint: 'https://eth-sepolia.g.alchemy.com/v2/OOIMS_hWS2oBIZXbMyjTG',
    },
    'dex': {
     chain: 'evm',
