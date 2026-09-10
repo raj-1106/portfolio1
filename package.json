@@ -21,7 +21,8 @@
     "viem": "^2.56.3"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^22.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
