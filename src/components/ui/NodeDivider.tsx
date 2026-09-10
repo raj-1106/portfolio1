@@ -12,6 +12,7 @@ const statusColorMap: Record<NodeStatus, string> = {
   live: 'var(--node-live)',
   'in-progress': 'var(--node-progress)',
   archived: 'var(--node-archived)',
+  completed: 'var(--node-completed)',
 };
 
 /**

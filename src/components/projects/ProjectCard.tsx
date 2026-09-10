@@ -17,12 +17,14 @@ const statusColorMap = {
   live: 'var(--node-live)',
   'in-progress': 'var(--node-progress)',
   archived: 'var(--node-archived)',
+  completed: 'var(--node-completed)',
 };
 
 const statusLabelMap = {
   live: 'Live',
   'in-progress': 'In Progress',
   archived: 'Archived',
+  completed: 'Completed',
 };
 
 /**
