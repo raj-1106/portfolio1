@@ -1,3 +1,5 @@
+import { TechStackGraph } from './TechStackGraph';
+
 export function AboutSection() {
   return (
     <div style={{ maxWidth: '60ch' }}>
@@ -10,11 +12,15 @@ export function AboutSection() {
         different enough that switching between them keeps things
         interesting.
       </p>
-      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7 }}>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '3rem' }}>
         Solidity, Rust/Anchor, and Fabric chaincode, plus whatever a
         project actually needs around them. Selected as a Martian in the
         BNB Chain Program. Based in Vadodara, India.
       </p>
+      
+      <div style={{ marginTop: '2rem' }}>
+        <TechStackGraph />
+      </div>
     </div>
   );
 }
