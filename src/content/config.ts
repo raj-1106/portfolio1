@@ -119,22 +119,22 @@ export const rpcAllowlist: Record<string, {
    // Populate with actual program IDs and endpoints when available
    'roomiesplit': {
     chain: 'svm',
-    programId: 'BzEpHaoaEGSQwnFbSv8gVwpxh4tQBn2WS1pDTjUMbc3c', // PLACEHOLDER
+    programId: 'BzEpHaoaEGSQwnFbSv8gVwpxh4tQBn2WS1pDTjUMbc3c',
     rpcEndpoint: 'https://api.devnet.solana.com',
    },
    'lending-protocol': {
     chain: 'svm',
-    programId: '4mLbRVccVFXDkcGDBApraUxXVUfJoTUMg4gd4EBjQVuQ', // PLACEHOLDER
+    programId: '4mLbRVccVFXDkcGDBApraUxXVUfJoTUMg4gd4EBjQVuQ',
     rpcEndpoint: 'https://api.devnet.solana.com',
    },
    'proof-of-touch-grass': {
     chain: 'evm',
-    programId: '0x431Fb77991919b47D7f54f18d393490707819561', // PLACEHOLDER
+    programId: '0x431Fb77991919b47D7f54f18d393490707819561',
     rpcEndpoint: 'https://rpc.sepolia.org',
    },
    'dex': {
     chain: 'evm',
-    programId: '0x83Bc786acDEDF91cCA6Dd3af7aA6Bd9a36A8CFc8',
+    programId: '0x9fE7B201f1189b51FDC7C481806098A4070CCD10',
     rpcEndpoint: 'https://eth-sepolia.g.alchemy.com/v2/OOIMS_hWS2oBIZXbMyjTG',
    }
 };

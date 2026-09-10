@@ -4,17 +4,17 @@ slug: 'dex'
 description: 'Constant-product automated market maker (x·y=k) supporting arbitrary ERC-20 pairs.'
 tags: ['DeFi', 'DEX', 'AMM', 'EVM']
 chain: 'evm'
-evmChain: 'amoy'
-techStack: ['Solidity', 'Foundry', 'Polygon']
+evmChain: 'sepolia'
+techStack: ['Solidity', 'Foundry', 'Ethereum']
 status: 'in-progress'
 depth: 'full'
-repoUrl: 'https://github.com/your-username/dex'
+repoUrl: 'https://github.com/raj-1106/dex'
 diagramType: 'amm-graph'
 ---
 
 ## Overview
 
-A constant-product AMM (x·y=k) live on Polygon Amoy testnet, with a 0.3% swap fee, supporting liquidity provision, removal, and swaps between arbitrary ERC-20 pairs.
+A constant-product AMM (x·y=k) live on Ethereum Sepolia testnet, with a 0.3% swap fee, supporting liquidity provision, removal, and swaps between arbitrary ERC-20 pairs.
 
 ## How it works
 
@@ -22,7 +22,7 @@ Pools are keyed by a canonical, sorted token pair, so addLiquidity(A, B) and a l
 
 ## What a security pass actually caught
 
-Before this went live, a review of an earlier draft turned up a real reentrancy hole (external token transfer happening before reserve state updated, the standard checks-effects-interactions violation), plus five smaller issues: non-canonical pool identity, no minimum-liquidity lock, no slippage or deadline protection, unchecked ERC20 return values, and no handling for fee-on-transfer tokens. All six were fixed before deployment, the reentrancy fix specifically is regression-tested with a Foundry test that simulates a malicious token reentering swap() mid-transfer and confirms it now reverts.
+Before this went live, a review of an earlier draft turned up a real reentrancy hole (external token transfer happening before reserve state updated, the standard checks-effects-interactions violation), plus five smaller issues: non-canonical pool identity, no minimum-liquidity lock, no slippage or deadline protection, unchecked ERC20 return values, and no handling for fee-on-transfer tokens. All six were fixed before deployment, the reentrancy fix specifically is regression-tested with a [Foundry test](https://github.com/raj-1106/dex/blob/main/test/DEX.t.sol) that simulates a malicious token reentering swap() mid-transfer and confirms it now reverts.
 
 ## Current state
 
