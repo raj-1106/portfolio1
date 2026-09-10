@@ -8,7 +8,7 @@ export const siteConfig = {
   name: 'Raj Lathigra',
   tagline: 'I write code that moves other people\'s money and tries very hard not to lose it.',
   description: 'Blockchain developer building DeFi protocols, on-chain applications, and enterprise distributed ledger solutions across SVM and EVM.',
-  url: 'https://your-domain.vercel.app',
+  url: 'https://raj-lathigra.vercel.app',
   socials: {
     github: 'https://github.com/raj-1106',
     linkedin: 'https://linkedin.com/in/raj-lathigra',
