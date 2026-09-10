@@ -31,7 +31,12 @@ export function Navbar() {
         if (visibleEntries.length > 0) {
           // Sort by intersection ratio to get the most visible one
           visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-          setActiveHash(`/#${visibleEntries[0].target.id}`);
+          const topId = visibleEntries[0].target.id;
+          if (topId === 'hero') {
+            setActiveHash('');
+          } else {
+            setActiveHash(`/#${topId}`);
+          }
         }
       },
       {
@@ -48,6 +53,10 @@ export function Navbar() {
         if (el) observer.observe(el);
       }
     });
+
+    // Observe hero section to clear active state when at the top
+    const heroEl = document.getElementById('hero');
+    if (heroEl) observer.observe(heroEl);
 
     return () => observer.disconnect();
   }, [pathname]);
