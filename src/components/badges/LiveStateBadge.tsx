@@ -19,6 +19,13 @@ function formatTimeAgo(timestamp: number | null): string {
   return `${Math.floor(minutes / 60)}h ago`;
 }
 
+function formatBalance(balanceWei: bigint | number): string {
+  const wei = typeof balanceWei === 'bigint' ? balanceWei : BigInt(balanceWei);
+  if (wei === 0n) return 'No liquidity yet';
+  const eth = Number(wei) / 1e18;
+  return `${eth.toFixed(4)} ETH pooled`;
+}
+
 /**
  * Live-state badge for project cards.
  * Shows loading skeleton → live data → stale data → error.
@@ -65,12 +72,9 @@ export function LiveStateBadge({ programSlug }: LiveStateBadgeProps) {
             }}
           >
             <StatusIndicator status="success" pulse />
-            <span style={{ color: 'var(--node-live)' }}>Live</span>
-            {Object.entries(data).slice(0, 2).map(([key, value]) => (
-              <span key={key} style={{ color: 'var(--text-secondary)' }}>
-                {key}: {value}
-              </span>
-            ))}
+            <span style={{ color: 'var(--text-secondary)' }}>
+              {data.balanceWei !== undefined ? formatBalance(data.balanceWei as number) : 'Live'} · updated {formatTimeAgo(lastUpdated)}
+            </span>
           </motion.div>
         )}
 
