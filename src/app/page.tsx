@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { HeroSection } from '@/components/hero/HeroSection';
+import { AboutSection } from '@/components/about/AboutSection';
 import { ProjectGrid } from '@/components/projects/ProjectGrid';
 import { ChainFilter } from '@/components/projects/ChainFilter';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
@@ -19,6 +20,14 @@ export default function Home() {
       <HeroSection />
 
       <div className="container">
+        {/* ──── About Section ──── */}
+        <AnimatedSection>
+          <section id="about" className="section" style={{ paddingTop: '2rem' }}>
+            <h2 style={{ marginBottom: '1.5rem' }}>About</h2>
+            <AboutSection />
+          </section>
+        </AnimatedSection>
+
         {/* ──── Projects Section ──── */}
         <NodeDivider dotStatus="in-progress" />
 
