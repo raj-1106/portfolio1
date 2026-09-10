@@ -10,12 +10,12 @@ describe('CopyAddress', () => {
     render(<CopyAddress address="0xA1755560e8CAec3d69446F57B6D97B5aF6f2BD63" />);
     fireEvent.click(screen.getByRole('button'));
     await waitFor(() => expect(writeText).toHaveBeenCalledWith('0xA1755560e8CAec3d69446F57B6D97B5aF6f2BD63'));
-    expect(await screen.findByText(/copied/i)).toBeInTheDocument();
+    expect(await screen.findByText(/copied/i)).toBeTruthy();
   });
 
   it('truncates a short address without crashing (edge case)', () => {
     render(<CopyAddress address="0x1234567890" />);
-    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeTruthy();
   });
 
   it('shows a clear fallback message if clipboard write fails (failure case)', async () => {
@@ -23,6 +23,6 @@ describe('CopyAddress', () => {
     Object.assign(navigator, { clipboard: { writeText } });
     render(<CopyAddress address="0xA1755560e8CAec3d69446F57B6D97B5aF6f2BD63" />);
     fireEvent.click(screen.getByRole('button'));
-    expect(await screen.findByText(/copy failed/i)).toBeInTheDocument();
+    expect(await screen.findByText(/copy failed/i)).toBeTruthy();
   });
 });

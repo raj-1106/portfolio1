@@ -12,7 +12,7 @@ describe('initConsoleEasterEgg', () => {
   it('does nothing when window is undefined, i.e. during SSR (failure case)', () => {
     const spy = vi.spyOn(console, 'log').mockImplementation(() => {});
     const originalWindow = global.window;
-    // @ts-expect-error simulating SSR
+    // @ts-ignore simulating SSR
     delete (global as any).window;
     initConsoleEasterEgg();
     expect(spy).not.toHaveBeenCalled();
