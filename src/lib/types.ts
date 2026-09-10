@@ -6,7 +6,7 @@ export interface ProjectMeta {
   chain: 'svm' | 'evm';
   evmChain?: 'sepolia' | 'mainnet' | 'amoy';
   techStack: string[];
-  status: 'live' | 'in-progress' | 'archived';
+  status: 'live' | 'in-progress' | 'archived' | 'completed';
   liveUrl?: string;
   repoUrl: string;
   rpcEndpoint?: string;

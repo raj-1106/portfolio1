@@ -18,6 +18,7 @@
   --node-live: hsl(145, 60%, 50%);
   --node-progress: hsl(28, 90%, 58%);
   --node-archived: hsl(220, 10%, 45%);
+  --node-completed: hsl(200, 60%, 55%);
 
   --radius: 8px;
   --font-sans: 'Inter', system-ui, sans-serif;

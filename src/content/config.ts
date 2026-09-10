@@ -97,9 +97,9 @@ export const projects: ProjectMeta[] = [
     tags: ['Security', 'DeFi', 'EVM'],
     chain: 'evm',
     techStack: ['Solidity', 'Foundry', 'Fuzzing'],
-    status: 'archived',
+    status: 'completed',
     depth: 'full',
-    repoUrl: 'https://github.com/your-username/erc-4626-inflation-attack',
+    repoUrl: 'https://github.com/raj-1106/erc-4626-inflation-attack',
     diagramType: 'inflation-attack-comparison',
   },
 ];
