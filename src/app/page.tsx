@@ -1,17 +1,10 @@
-'use client';
-
-import { useState } from 'react';
-import Link from 'next/link';
 import { HeroSection } from '@/components/hero/HeroSection';
 import { AboutSection } from '@/components/about/AboutSection';
-import { ProjectGrid } from '@/components/projects/ProjectGrid';
-import { ChainFilter } from '@/components/projects/ChainFilter';
+import { FilteredProjects } from '@/components/projects/FilteredProjects';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { NodeDivider } from '@/components/ui/NodeDivider';
-import { Card } from '@/components/ui/Card';
 import { projects, siteConfig } from '@/content/config';
 import { ExperienceList } from '@/components/experience/ExperienceList';
-import type { ChainFilter as ChainFilterType } from '@/lib/types';
 
 export default function Home() {
   return (
@@ -20,7 +13,7 @@ export default function Home() {
       <HeroSection />
 
       <div className="container">
-        {/* ──── About Section ──── */}
+        {/* ──── About ──── */}
         <AnimatedSection>
           <section id="about" className="section" style={{ paddingTop: '2rem' }}>
             <h2 style={{ marginBottom: '1.5rem' }}>About</h2>
@@ -28,35 +21,21 @@ export default function Home() {
           </section>
         </AnimatedSection>
 
-        {/* ──── Projects Section ──── */}
+        {/* ──── Projects ──── */}
         <NodeDivider dotStatus="in-progress" />
 
         <AnimatedSection>
           <section id="projects" className="section">
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: '1rem',
-                marginBottom: '0.5rem',
-              }}
-            >
-              <h2>Projects</h2>
-            </div>
-
+            <h2 style={{ marginBottom: '0.5rem' }}>Projects</h2>
             <p style={{ marginBottom: '1.5rem', fontSize: '0.875rem' }}>
-              DeFi protocols and on-chain applications across Solana and EVM. Two chains, zero interoperability between them, entirely on purpose for now.
+              DeFi protocols and on-chain applications across Solana and EVM. Two chains, zero
+              interoperability between them, entirely on purpose for now.
             </p>
-
-            <ChainFilter projects={projects}>
-              {(filteredProjects) => <ProjectGrid projects={filteredProjects} />}
-            </ChainFilter>
+            <FilteredProjects projects={projects} />
           </section>
         </AnimatedSection>
 
-        {/* ──── Experience Section ──── */}
+        {/* ──── Experience ──── */}
         <NodeDivider dotStatus="archived" />
 
         <AnimatedSection>
@@ -66,7 +45,7 @@ export default function Home() {
           </section>
         </AnimatedSection>
 
-        {/* ──── Contact Section ──── */}
+        {/* ──── Contact ──── */}
         <NodeDivider dotStatus="live" />
 
         <AnimatedSection>
@@ -97,6 +76,7 @@ export default function Home() {
                 href={siteConfig.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="contact-github-link"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -109,8 +89,6 @@ export default function Home() {
                   fontSize: '0.875rem',
                   transition: 'border-color var(--duration-fast) ease',
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--line)'; }}
               >
                 GitHub
               </a>

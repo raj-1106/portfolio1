@@ -1,9 +1,5 @@
 import type { ProjectMeta } from '@/lib/types';
 
-// ============================================================
-// Site metadata — replace placeholders with your actual info
-// ============================================================
-
 export const siteConfig = {
   name: 'Raj Lathigra',
   tagline: 'I write code that moves other people\'s money and tries very hard not to lose it.',
@@ -17,9 +13,6 @@ export const siteConfig = {
   },
 } as const;
 
-// ============================================================
-// Navigation
-// ============================================================
 
 export const navItems = [
   { label: 'About', href: '/#about' },
@@ -28,16 +21,10 @@ export const navItems = [
   { label: 'Contact', href: '/#contact' },
 ] as const;
 
-// ============================================================
-// RPC constants
-// ============================================================
 
 export const RPC_CACHE_TTL = 30_000;       // 30s — best-effort in-memory cache
 export const RPC_POLL_INTERVAL = 60_000;   // 60s — client-side polling
 
-// ============================================================
-// Project data
-// ============================================================
 
 export const projects: ProjectMeta[] = [
   {
@@ -48,7 +35,6 @@ export const projects: ProjectMeta[] = [
     chain: 'svm',
     techStack: ['Rust', 'Anchor 0.31.1', 'Solana', 'React', 'TypeScript'],
     status: 'live',
-    depth: 'full',
     repoUrl: 'https://github.com/raj-1106/roomiesplit',
     liveUrl: 'https://roomiesplit1.netlify.app/'
   },
@@ -60,7 +46,6 @@ export const projects: ProjectMeta[] = [
     chain: 'svm',
     techStack: ['Rust', 'Anchor', 'Solana', 'Pyth Oracle'],
     status: 'live',
-    depth: 'full',
     repoUrl: 'https://github.com/raj-1106/lending-protocol',
     diagramType: 'liquidation-flow',
   },
@@ -73,7 +58,6 @@ export const projects: ProjectMeta[] = [
     evmChain: 'amoy',
     techStack: ['Solidity', 'Foundry', 'Ethereum'],
     status: 'live',
-    depth: 'full',
     repoUrl: 'https://github.com/raj-1106/dex',
     liveUrl: 'https://dex-ten-omega.vercel.app/',
     diagramType: 'amm-graph',
@@ -87,7 +71,6 @@ export const projects: ProjectMeta[] = [
     evmChain: 'sepolia',
     techStack: ['Solidity', 'Hardhat', 'Ethers.js', 'React'],
     status: 'live',
-    depth: 'full',
     repoUrl: 'https://github.com/raj-1106/proof-of-touch-grass',
     liveUrl: 'https://proof-of-touchgrass.netlify.app',
   },
@@ -99,25 +82,18 @@ export const projects: ProjectMeta[] = [
     chain: 'evm',
     techStack: ['Solidity', 'Foundry', 'Fuzzing'],
     status: 'completed',
-    depth: 'full',
     repoUrl: 'https://github.com/raj-1106/erc-4626-inflation-attack',
     diagramType: 'inflation-attack-comparison',
   },
 ];
 
-// Removed Experience data to use static typed array in experience.ts
 
-// ============================================================
-// RPC allowlist — programs allowed through the proxy
-// Only entries here can be fetched via /api/rpc/[program]
-// ============================================================
-
+// RPC allowlist — only programs listed here can be fetched via /api/rpc/[program]
 export const rpcAllowlist: Record<string, {
   chain: 'svm' | 'evm';
   programId: string;
   rpcEndpoint: string;
 }> = {
-   // Populate with actual program IDs and endpoints when available
    'roomiesplit': {
     chain: 'svm',
     programId: 'BzEpHaoaEGSQwnFbSv8gVwpxh4tQBn2WS1pDTjUMbc3c',

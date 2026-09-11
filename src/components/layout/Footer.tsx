@@ -51,7 +51,6 @@ export function Footer() {
             gap: '1rem',
           }}
         >
-          {/* Social links */}
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             {socialLinks.map((link) => (
               <a
@@ -79,7 +78,6 @@ export function Footer() {
             ))}
           </div>
 
-          {/* Email */}
           <a
             href={`mailto:${siteConfig.socials.email}`}
             style={{

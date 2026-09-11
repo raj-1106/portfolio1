@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { ReducedMotionProvider } from '@/components/common/ReducedMotionContext';
+import { ConsoleEasterEgg } from '@/components/common/ConsoleEasterEgg';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import './globals.css';
@@ -32,7 +33,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { ConsoleEasterEgg } from '@/components/common/ConsoleEasterEgg';
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (

@@ -61,7 +61,6 @@ export function TypingEffect({ text, speed = 50, delay = 0 }: TypingEffectProps)
     return () => clearTimeout(timer);
   }, [reduced, text, delay, animate]);
 
-  // Show full text immediately if reduced motion
   if (reduced) {
     return (
       <span style={{ fontFamily: 'inherit' }}>
@@ -78,7 +77,6 @@ export function TypingEffect({ text, speed = 50, delay = 0 }: TypingEffectProps)
       }}
     >
       {displayedText}
-      {/* Blinking cursor */}
       {!isComplete && hasStarted && (
         <span
           className="typing-cursor"
@@ -92,15 +90,6 @@ export function TypingEffect({ text, speed = 50, delay = 0 }: TypingEffectProps)
         </span>
       )}
 
-      <style jsx>{`
-        @keyframes blink {
-          0%, 50% { opacity: 1; }
-          51%, 100% { opacity: 0; }
-        }
-        .typing-cursor {
-          animation: blink 1s step-end infinite;
-        }
-      `}</style>
     </span>
   );
 }

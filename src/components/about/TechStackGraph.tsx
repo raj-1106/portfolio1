@@ -2,7 +2,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useMotionPreference } from '@/components/common/ReducedMotionContext';
 
 const nodes = [
   { id: 'solidity', label: 'Solidity / EVM', x: 60, y: 40, r: 5 },
@@ -23,7 +23,7 @@ function curvePath(x1: number, y1: number, x2: number, y2: number) {
 }
 
 export function TechStackGraph() {
-  const reducedMotion = useReducedMotion();
+  const reducedMotion = useMotionPreference();
   const findNode = (id: string) => nodes.find((n) => n.id === id)!;
 
   return (

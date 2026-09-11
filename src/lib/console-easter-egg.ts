@@ -1,4 +1,4 @@
-// src/lib/console-easter-egg.ts
+
 export function initConsoleEasterEgg() {
   if (typeof window === 'undefined') return;
 

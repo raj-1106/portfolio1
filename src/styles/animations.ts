@@ -1,8 +1,5 @@
 import type { Variants, Transition } from 'framer-motion';
 
-// ============================================================
-// Shared transition configs
-// ============================================================
 
 export const smoothTransition: Transition = {
   duration: 0.4,
@@ -13,12 +10,6 @@ export const quickTransition: Transition = {
   duration: 0.2,
   ease: [0.16, 1, 0.3, 1],
 };
-
-// ============================================================
-// Framer Motion variant presets
-// All variants return empty objects when reduced motion is active.
-// Use: <motion.div variants={fadeInUp} initial="hidden" animate="visible">
-// ============================================================
 
 /**
  * Returns variants adjusted for reduced-motion preference.
@@ -35,9 +26,7 @@ function motionSafe<T extends Variants>(variants: T, reduced: boolean): T {
   return variants;
 }
 
-// ============================================================
-// Variant factories — call with useMotionPreference() result
-// ============================================================
+// Variant factories — call with useMotionPreference() result.
 
 export const fadeInUp = (reduced: boolean): Variants =>
   motionSafe(

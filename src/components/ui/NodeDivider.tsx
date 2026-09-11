@@ -47,7 +47,6 @@ export function NodeDivider({
       }}
       role="separator"
     >
-      {/* Line */}
       <div
         style={{
           position: 'absolute',
@@ -59,7 +58,6 @@ export function NodeDivider({
         }}
       />
 
-      {/* Node dot */}
       {hasDot && (
         <div
           style={{

@@ -60,7 +60,7 @@ export function LiveStateBadge({ programSlug }: LiveStateBadgeProps) {
 
         {status === 'success' && data && (
           <motion.div
-            key={`success-${JSON.stringify(data)}`}
+            key={`success-${lastUpdated}`}
             initial={reduced ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={reduced ? undefined : { opacity: 0 }}
@@ -112,7 +112,7 @@ export function LiveStateBadge({ programSlug }: LiveStateBadgeProps) {
             }}
           >
             <StatusIndicator status="error" pulse={false} />
-            <span style={{ color: 'var(--node-archived)' }}>RPC's not answering. Neither would I, at this hour.</span>
+            <span style={{ color: 'var(--node-archived)' }}>RPC unavailable. Data may be stale.</span>
           </motion.div>
         )}
       </AnimatePresence>

@@ -37,7 +37,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <motion.div variants={fadeInUp(reduced)}>
       <Card as="article" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        {/* Header: status dot + chain tag */}
         <div
           style={{
             display: 'flex',
@@ -47,7 +46,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            {/* Status node dot */}
             <span
               style={{
                 width: '6px',
@@ -68,7 +66,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </span>
           </div>
 
-          {/* Chain tag pill */}
           <span
             style={{
               fontSize: '0.675rem',
@@ -85,14 +82,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </span>
         </div>
 
-        {/* Live State Badge if configured */}
         {rpcAllowlist[project.slug] && (
           <div style={{ marginBottom: '0.5rem' }}>
             <LiveStateBadge programSlug={project.slug} />
           </div>
         )}
 
-        {/* Title */}
         <h3
           style={{
             fontSize: '1.25rem',
@@ -103,7 +98,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.title}
         </h3>
 
-        {/* Description */}
         <p
           style={{
             fontSize: '0.875rem',
@@ -116,7 +110,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.description}
         </p>
 
-        {/* Tech stack tags */}
         <div
           style={{
             display: 'flex',
@@ -142,7 +135,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           ))}
         </div>
 
-        {/* Case study link */}
         <Link
           href={`/projects/${project.slug}`}
           style={{
@@ -162,11 +154,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </span>
         </Link>
 
-        <style jsx global>{`
-          .case-study-link:hover .case-study-arrow {
-            transform: translateX(4px);
-          }
-        `}</style>
       </Card>
     </motion.div>
   );

@@ -82,7 +82,6 @@ export function Navbar() {
           height: '64px',
         }}
       >
-        {/* Logo / Name */}
         <Link
           href="/"
           style={{
@@ -94,7 +93,6 @@ export function Navbar() {
             gap: '0.5rem',
           }}
         >
-          {/* Node dot before name */}
           <span
             style={{
               width: '8px',
@@ -107,7 +105,6 @@ export function Navbar() {
           {siteConfig.name}
         </Link>
 
-        {/* Desktop nav links */}
         <ul
           style={{
             display: 'flex',
@@ -144,7 +141,6 @@ export function Navbar() {
                 >
                   {item.label}
 
-                  {/* Active indicator: node dot */}
                   {isActive && (
                     <motion.span
                       layoutId={reduced ? undefined : 'nav-active-dot'}
@@ -256,32 +252,6 @@ export function Navbar() {
         )}
       </AnimatePresence>
 
-      <style jsx global>{`
-        .nav-link::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 1px;
-          background-color: var(--accent);
-          transform: scaleX(0);
-          transform-origin: center;
-          transition: transform var(--duration-normal) var(--ease-out-expo);
-        }
-        .nav-link:hover::after {
-          transform: scaleX(1);
-        }
-
-        @media (max-width: 768px) {
-          .nav-links-desktop {
-            display: none !important;
-          }
-          .nav-mobile-toggle {
-            display: block !important;
-          }
-        }
-      `}</style>
     </header>
   );
 }

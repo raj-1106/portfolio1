@@ -37,7 +37,6 @@ export function useLiveState(programSlug: string): LiveState {
         throw new Error(json.error || 'RPC fetch failed');
       }
 
-      // Success
       lastSuccessfulData.current = json.data;
       lastUpdatedRef.current = Date.now();
 
@@ -50,7 +49,6 @@ export function useLiveState(programSlug: string): LiveState {
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
 
-      // If we have previous successful data, show it as stale
       if (lastSuccessfulData.current) {
         setState({
           status: 'stale',

@@ -2,8 +2,8 @@ export interface ExperienceEntry {
   role: string;
   company: string;
   location: string;
-  startDate: string; // "April 2026"
-  endDate: string;   // "Present" or "April 2026"
+  startDate: string;
+  endDate: string;
   bullets: string[];
 }
 

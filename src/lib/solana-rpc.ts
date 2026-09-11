@@ -1,14 +1,7 @@
 /**
- * Solana RPC client using @solana/web3.js
- * Used by the RPC proxy to fetch on-chain state for SVM projects.
- *
- * Functions:
- * - fetchSolanaState: Generic dispatcher
- * - fetchPoolReserves: AMM pool data
- * - fetchStakeCount: Lending protocol stake count
- * - fetchRoomieSplitState: RoomieSplit program state
- *
- * Retry: 2 retries, exponential backoff (500ms → 1500ms)
+ * Solana RPC client using @solana/web3.js.
+ * Fetches on-chain state for SVM projects via the RPC proxy.
+ * Retry: 2 attempts, exponential backoff (500ms → 1000ms)
  */
 
 async function withRetry<T>(
@@ -30,9 +23,8 @@ async function withRetry<T>(
 }
 
 /**
- * Generic Solana state fetcher.
- * Dispatches to specific functions based on what data the program exposes.
- * For now, returns a basic account-exists check until real program ABIs are provided.
+ * Solana state fetcher.
+ * Returns account existence, executable flag, lamports, and data length.
  */
 export async function fetchSolanaState(
   programId: string,

@@ -12,10 +12,8 @@ export interface ProjectMeta {
   rpcEndpoint?: string;
   programId?: string;
   diagramType?: 'liquidation-flow' | 'amm-graph' | 'lp-collateral-cpi' | 'inflation-attack-comparison';
-  depth: 'full' | 'brief';
 }
 
-// Removed ExperienceMeta in favor of static array
 
 export interface LiveState {
   status: 'loading' | 'success' | 'error' | 'stale';

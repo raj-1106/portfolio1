@@ -17,9 +17,3 @@ export function getProjectBySlug(slug: string): { meta: ProjectMeta; content: st
   const { data, content } = matter(raw);
   return { meta: data as ProjectMeta, content };
 }
-
-export function getAllProjects(): ProjectMeta[] {
-  return getProjectSlugs()
-    .map((slug) => getProjectBySlug(slug)?.meta)
-    .filter((m): m is ProjectMeta => Boolean(m));
-}

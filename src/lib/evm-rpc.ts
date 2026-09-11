@@ -1,13 +1,7 @@
 /**
- * EVM RPC client using viem
- * Used by the RPC proxy to fetch on-chain state for EVM projects.
- * Configured for Sepolia testnet.
- *
- * Functions:
- * - fetchEvmState: Generic dispatcher
- * - fetchTouchGrassState: Proof of Touch Grass contract state
- *
- * Retry: 2 retries, exponential backoff (500ms → 1500ms)
+ * EVM RPC client using viem.
+ * Fetches on-chain state for EVM projects via the RPC proxy.
+ * Retry: 2 attempts, exponential backoff (500ms → 1000ms)
  */
 
 async function withRetry<T>(
@@ -21,7 +15,7 @@ async function withRetry<T>(
     } catch (err) {
       if (attempt === retries) throw err;
       await new Promise((resolve) =>
-        setTimeout(resolve, baseDelay * Math.pow(3, attempt)),
+        setTimeout(resolve, baseDelay * Math.pow(2, attempt)),
       );
     }
   }
@@ -30,8 +24,7 @@ async function withRetry<T>(
 
 /**
  * Generic EVM state fetcher.
- * For now, does a basic balance/code check on the contract address.
- * Will be extended with contract ABI reads when the ABI is provided.
+ * Checks deployment status and balance for a given contract address.
  */
 export async function fetchEvmState(
   contractAddress: string,

@@ -1,9 +1,7 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
 import * as Accordion from '@radix-ui/react-accordion';
 import { experience, type ExperienceEntry } from '@/content/experience';
-import { useMotionPreference } from '@/components/common/ReducedMotionContext';
 
 function ExperienceItem({
   entry,
@@ -14,18 +12,15 @@ function ExperienceItem({
   isLast: boolean;
   value: string;
 }) {
-  const reduced = useMotionPreference();
-
   return (
     <Accordion.Item value={value} asChild>
       <div style={{ display: 'flex', gap: '1.5rem' }}>
-        {/* Timeline Column */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            marginTop: '0.45rem', // Visually aligns dot with the <h3> text
+            marginTop: '0.45rem',
           }}
         >
           <div
@@ -50,7 +45,6 @@ function ExperienceItem({
           )}
         </div>
 
-        {/* Content Column */}
         <div style={{ flex: 1, paddingBottom: isLast ? '0' : '2.5rem' }}>
           <div
             style={{
@@ -82,6 +76,9 @@ function ExperienceItem({
 
           <Accordion.Header style={{ margin: 0 }}>
             <Accordion.Trigger
+              /* Browser extensions (password managers, etc.) inject attributes into
+                 interactive elements after hydration, causing false-positive warnings.
+                 suppressHydrationWarning is the standard fix for this pattern. */
               suppressHydrationWarning
               style={{
                 background: 'none',
@@ -113,46 +110,6 @@ function ExperienceItem({
             </ul>
           </Accordion.Content>
         </div>
-
-        <style jsx>{`
-          .expand-toggle:hover {
-            text-decoration: underline;
-          }
-          .expand-toggle:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-            border-radius: 2px;
-          }
-          .expand-text-hide {
-            display: none;
-          }
-          :global([data-state='open']) > .expand-toggle .expand-text-hide {
-            display: inline;
-          }
-          :global([data-state='open']) > .expand-toggle .expand-text-show {
-            display: none;
-          }
-          
-          /* Radix Accordion Animation */
-          :global(.AccordionContent) {
-            overflow: hidden;
-          }
-          :global(.AccordionContent[data-state='open']) {
-            animation: slideDown ${reduced ? '0s' : '0.3s'} cubic-bezier(0.87, 0, 0.13, 1);
-          }
-          :global(.AccordionContent[data-state='closed']) {
-            animation: slideUp ${reduced ? '0s' : '0.3s'} cubic-bezier(0.87, 0, 0.13, 1);
-          }
-          
-          @keyframes slideDown {
-            from { height: 0; opacity: 0; }
-            to { height: var(--radix-accordion-content-height); opacity: 1; }
-          }
-          @keyframes slideUp {
-            from { height: var(--radix-accordion-content-height); opacity: 1; }
-            to { height: 0; opacity: 0; }
-          }
-        `}</style>
       </div>
     </Accordion.Item>
   );
@@ -167,7 +124,6 @@ export function ExperienceList() {
     );
   }
 
-  // We set the default expanded item using defaultValue on the Root
   const firstValue = `${experience[0].company}-${experience[0].startDate}`;
 
   return (

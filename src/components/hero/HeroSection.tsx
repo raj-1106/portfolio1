@@ -4,8 +4,7 @@ import { TypingEffect } from '@/components/hero/TypingEffect';
 import { siteConfig } from '@/content/config';
 
 /**
- * Static 3-node SVG fragment — echoes diagram visual language.
- * Purely decorative. Will be replaced by a LiquidationFlowDiagram subset in Phase 5.
+ * Three-node SVG fragment — echoes diagram visual language. Purely decorative.
  */
 function HeroNodeFragment() {
   return (
@@ -17,11 +16,9 @@ function HeroNodeFragment() {
       aria-hidden="true"
       style={{ marginTop: '2rem', opacity: 0.7 }}
     >
-      {/* Connector lines */}
       <line x1="28" y1="20" x2="88" y2="20" stroke="var(--line)" strokeWidth="1" />
       <line x1="112" y1="20" x2="172" y2="20" stroke="var(--line)" strokeWidth="1" />
 
-      {/* Node dots */}
       <circle cx="20" cy="20" r="8" fill="none" stroke="var(--node-live)" strokeWidth="1.5" />
       <circle cx="20" cy="20" r="3" fill="var(--node-live)" />
 
@@ -54,7 +51,6 @@ export function HeroSection() {
       }}
     >
       <div className="container">
-        {/* Name — rendered immediately, no animation */}
         <h1
           style={{
             fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
@@ -66,19 +62,17 @@ export function HeroSection() {
           {siteConfig.name}
         </h1>
 
-        {/* Tagline — typing effect */}
         <p
           style={{
             marginTop: '1rem',
             fontSize: 'clamp(1.125rem, 2.5vw, 1.5rem)',
             color: 'var(--text-secondary)',
-            minHeight: '2.5rem', // Prevent CLS during typing
+            minHeight: '2.5rem',
           }}
         >
           <TypingEffect text={siteConfig.tagline} speed={60} delay={400} />
         </p>
 
-        {/* Description */}
         <p
           style={{
             marginTop: '1.5rem',
@@ -91,10 +85,8 @@ export function HeroSection() {
           {siteConfig.description}
         </p>
 
-        {/* Node fragment — decorative visual anchor */}
         <HeroNodeFragment />
 
-        {/* CTA links */}
         <div
           style={{
             marginTop: '2rem',

@@ -22,6 +22,9 @@ export function ResumeModal() {
     <>
       <button
         onClick={() => setIsOpen(true)}
+        /* Browser extensions (password managers, etc.) inject attributes into
+           buttons after hydration, causing false-positive mismatch warnings.
+           suppressHydrationWarning is the standard fix for this pattern. */
         suppressHydrationWarning
         style={{
           fontFamily: 'var(--font-mono)',
