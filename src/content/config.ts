@@ -59,7 +59,7 @@ export const projects: ProjectMeta[] = [
     tags: ['DeFi', 'Lending', 'Liquidation'],
     chain: 'svm',
     techStack: ['Rust', 'Anchor', 'Solana', 'Pyth Oracle'],
-    status: 'completed',
+    status: 'live',
     depth: 'full',
     repoUrl: 'https://github.com/raj-1106/lending-protocol',
     diagramType: 'liquidation-flow',
