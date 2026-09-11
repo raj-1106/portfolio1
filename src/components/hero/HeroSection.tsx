@@ -1,7 +1,10 @@
 'use client';
 
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { TypingEffect } from '@/components/hero/TypingEffect';
-import { siteConfig } from '@/content/config';
+import { siteConfig, taglines } from '@/content/config';
+import { useMotionPreference } from '@/components/common/ReducedMotionContext';
 
 /**
  * Three-node SVG fragment — echoes diagram visual language. Purely decorative.
@@ -33,12 +36,15 @@ function HeroNodeFragment() {
 
 /**
  * Full-viewport hero.
- * - Name/title renders immediately (no animation delay)
- * - TypingEffect for tagline
- * - Static 3-node diagram fragment as visual anchor
+ * - Name renders immediately
+ * - First tagline types out
+ * - Second tagline fades in once typing completes
  * - No particle backgrounds, no floating shapes, no gradient mesh
  */
 export function HeroSection() {
+  const [line1Done, setLine1Done] = useState(false);
+  const reducedMotion = useMotionPreference();
+
   return (
     <section
       id="hero"
@@ -47,7 +53,7 @@ export function HeroSection() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        paddingTop: '64px', // Clear fixed navbar
+        paddingTop: '64px',
       }}
     >
       <div className="container">
@@ -65,25 +71,35 @@ export function HeroSection() {
         <p
           style={{
             marginTop: '1rem',
-            fontSize: 'clamp(1.125rem, 2.5vw, 1.5rem)',
+            fontSize: '1.1rem',
             color: 'var(--text-secondary)',
-            minHeight: '2.5rem',
+            minHeight: '3.2em', // reserve space, avoid layout shift
           }}
         >
-          <TypingEffect text={siteConfig.tagline} speed={60} delay={400} />
+          <TypingEffect
+            text={taglines[0]}
+            speed={22} // faster than a "savor this" pace — this is meant to resolve quickly
+            delay={400}
+            onComplete={() => setLine1Done(true)}
+          />
         </p>
 
-        <p
-          style={{
-            marginTop: '1.5rem',
-            fontSize: '1rem',
-            color: 'var(--text-secondary)',
-            maxWidth: '50ch',
-            lineHeight: 1.7,
-          }}
-        >
-          {siteConfig.description}
-        </p>
+        {(line1Done || reducedMotion) && (
+          <motion.p
+            initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+            style={{
+              color: 'var(--text-secondary)',
+              fontSize: '0.95rem',
+              marginTop: '0.5rem',
+              maxWidth: '58ch',
+              lineHeight: 1.6,
+            }}
+          >
+            {taglines[1]}
+          </motion.p>
+        )}
 
         <HeroNodeFragment />
 

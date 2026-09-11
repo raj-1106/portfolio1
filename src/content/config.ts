@@ -1,9 +1,12 @@
 import type { ProjectMeta } from '@/lib/types';
 
+export const taglines: string[] = [
+  "I build smart contracts, then spend an embarrassing amount of time trying to convince them I'm a bad actor. So far I've won twice.",
+  "Solidity by day, Anchor by later that same day. Hyperledger Fabric whenever a bank asks nicely.",
+];
+
 export const siteConfig = {
   name: 'Raj Lathigra',
-  tagline: 'I write code that moves other people\'s money and tries very hard not to lose it.',
-  description: 'Blockchain developer building DeFi protocols, on-chain applications, and enterprise distributed ledger solutions across SVM and EVM.',
   url: 'https://raj-lathigra.vercel.app',
   socials: {
     github: 'https://github.com/raj-1106',

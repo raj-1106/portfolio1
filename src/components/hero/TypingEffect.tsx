@@ -7,6 +7,7 @@ interface TypingEffectProps {
   text: string;
   speed?: number;
   delay?: number;
+  onComplete?: () => void;
 }
 
 /**
@@ -15,7 +16,7 @@ interface TypingEffectProps {
  * Degrades to full static text under prefers-reduced-motion.
  * Container has fixed min-height to prevent CLS.
  */
-export function TypingEffect({ text, speed = 50, delay = 0 }: TypingEffectProps) {
+export function TypingEffect({ text, speed = 50, delay = 0, onComplete }: TypingEffectProps) {
   const reduced = useMotionPreference();
   const [displayedText, setDisplayedText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
@@ -38,6 +39,7 @@ export function TypingEffect({ text, speed = 50, delay = 0 }: TypingEffectProps)
           requestAnimationFrame(animate);
         } else {
           setIsComplete(true);
+          onComplete?.();
         }
       } else {
         requestAnimationFrame(animate);
@@ -50,6 +52,7 @@ export function TypingEffect({ text, speed = 50, delay = 0 }: TypingEffectProps)
     if (reduced) {
       setDisplayedText(text);
       setIsComplete(true);
+      onComplete?.();
       return;
     }
 
