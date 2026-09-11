@@ -15,7 +15,9 @@ export function AboutSection() {
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '3rem' }}>
         Solidity, Rust/Anchor, and Fabric chaincode, plus whatever a
         project actually needs around them. Selected as a Martian in the
-        BNB Chain Program. Based in Vadodara, India.
+        BNB Chain Program, and picked up Best UI Design at the Hackvengers
+        hackathon for a Web3 game, proof that the systems-first approach
+        doesn't mean the interface gets ignored. Based in Vadodara, India.
       </p>
       
       <div style={{ marginTop: '2rem' }}>
